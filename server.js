@@ -33,7 +33,9 @@ app.get("/books/new", (req, res) => {
 });
 // Index
 app.get("/books", (req, res) => {
-  res.send("index");
+  Book.find({}, (error, allBooks) => {
+    res.render("index.ejs", { books: allBooks });
+  });
 });
 
 app.listen(PORT);
