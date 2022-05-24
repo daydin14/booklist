@@ -7,14 +7,9 @@
     <title>Document</title>
   </head>
   <body>
-    <nav>
-      <a href="/books/new">Add a New Book</a>
-    </nav>
-    <h1>My Reading List</h1>
-    <ul>
-      <% books.forEach(book => { %>
-      <li><a href="/books/<%=book._id;%>"><%=book.title;%></a></li>
-      <% }) %>
-    </ul>
+    <nav><a href="/books">Back to Books Index</a></nav>
+    <h1><%=book.title%></h1>
+    Author: <%=book.author%> <br />
+    Completed: <%=book.completed%>
   </body>
 </html>

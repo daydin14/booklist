@@ -24,7 +24,7 @@ app.post("/books", (req, res) => {
     req.body.completed = false;
   }
   Book.create(req.body, (error, createdBook) => {
-    res.send(createdBook);
+    res.redirect("/books");
   });
 });
 // New
@@ -35,6 +35,14 @@ app.get("/books/new", (req, res) => {
 app.get("/books", (req, res) => {
   Book.find({}, (error, allBooks) => {
     res.render("index.ejs", { books: allBooks });
+  });
+});
+// Show
+app.get("/books/:id", (req, res) => {
+  Book.findById(req.params.id, (err, foundBook) => {
+    res.render("show.ejs", {
+      book: foundBook,
+    });
   });
 });
 
