@@ -17,7 +17,12 @@ db.on("disconnected", () => console.log("mongo disconnected"));
 
 // Create
 app.post("/books", (req, res) => {
-  res.send("received");
+  if (req.body.completed === "on") {
+    req.body.completed = true;
+  } else {
+    req.body.completed = false;
+  }
+  res.send(req.body);
 });
 // Create
 // app.post("/books", (req,res) => {
