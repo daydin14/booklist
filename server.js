@@ -3,6 +3,8 @@ const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT;
 
+app.use(express.urlencoded({ extended: false }));
+
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE_URI, {
   useNewUrlParser: true,
