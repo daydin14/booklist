@@ -6,6 +6,7 @@ const PORT = process.env.PORT;
 app.use(express.urlencoded({ extended: false }));
 
 const mongoose = require("mongoose");
+const Book = require("./models/book");
 mongoose.connect(process.env.DATABASE_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -22,11 +23,17 @@ app.post("/books", (req, res) => {
   } else {
     req.body.completed = false;
   }
-  res.send(req.body);
+  Book.create(req.body, (error, createdBook) => {
+    res.send(createdBook);
+  });
 });
-// Create
-// app.post("/books", (req,res) => {
-//     res.send(req.body);
-// });
+// New
+app.get("/books/new", (req, res) => {
+  res.render("new.ejs");
+});
+// Index
+app.get("/books", (req, res) => {
+  res.send("index");
+});
 
 app.listen(PORT);
