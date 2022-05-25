@@ -1,6 +1,6 @@
 // Dependencies
 const express = require("express"); // Node Module use the singleton pattern
-const bookRouter = express.Router(); // could simplify and call it router not bookRouter
+const bookRouter = express.Router(); // could simplify and call it router not bookRouter // Factory Functtion- function that returns an object once invoked
 
 // Seed
 const bookSeed = require("../models/bookSeed");
