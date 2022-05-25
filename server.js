@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT;
+const mongoose = require("mongoose");
+const Book = require("./models/book");
 
 app.use(express.urlencoded({ extended: false }));
 
-const mongoose = require("mongoose");
-const Book = require("./models/book");
 mongoose.connect(process.env.DATABASE_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -16,6 +16,14 @@ db.on("error", (err) => console.log(err.message + " is mongo not running?"));
 db.on("connected", () => console.log("mongo connected"));
 db.on("disconnected", () => console.log("mongo disconnected"));
 
+// Seed Data
+const bookSeed = require("./models/bookSeed.js");
+app.get("/book/seed", (req, res) => {
+  Book.deleteMany({}, (error, allBooks) => {});
+  Book.create(bookSeed, (error, data) => {
+    res.redirect("/books");
+  });
+});
 // Create
 app.post("/books", (req, res) => {
   if (req.body.completed === "on") {
