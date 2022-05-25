@@ -4,8 +4,10 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 const mongoose = require("mongoose");
 const Book = require("./models/book");
+const methodOverride = require("method-override");
 
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
 
 mongoose.connect(process.env.DATABASE_URI, {
   useNewUrlParser: true,
