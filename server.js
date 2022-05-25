@@ -19,13 +19,13 @@ db.on("connected", () => console.log("mongo connected"));
 db.on("disconnected", () => console.log("mongo disconnected"));
 
 // Seed Data
-const bookSeed = require("./models/bookSeed.js");
-app.get("/book/seed", (req, res) => {
-  Book.deleteMany({}, (error, allBooks) => {});
-  Book.create(bookSeed, (error, data) => {
-    res.redirect("/books");
-  });
-});
+// const bookSeed = require("./models/bookSeed.js");
+// app.get("/book/seed", (req, res) => {
+//   Book.deleteMany({}, (error, allBooks) => {});
+//   Book.create(bookSeed, (error, data) => {
+//     res.redirect("/books");
+//   });
+// });
 // Create
 app.post("/books", (req, res) => {
   if (req.body.completed === "on") {
@@ -53,6 +53,38 @@ app.get("/books/:id", (req, res) => {
     res.render("show.ejs", {
       book: foundBook,
     });
+  });
+});
+// Update
+app.put("/books/:id", (req, res) => {
+  if (req.body.completed === "on") {
+    req.body.completed = true;
+  } else {
+    req.body.completed = false;
+  }
+  Book.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+    },
+    (error, updatedBook) => {
+      res.redirect(`/books/${req.params.id}`);
+    }
+  );
+});
+// Edit
+app.get("/books/:id/edit", (req, res) => {
+  Book.findById(req.params.id, (error, foundBook) => {
+    res.render("edit.ejs", {
+      book: foundBook,
+    });
+  });
+});
+// Delete
+app.delete("/books/:id", (req, res) => {
+  Book.findByIdAndDelete(req.params.id, (err, data) => {
+    res.redirect("/books");
   });
 });
 
