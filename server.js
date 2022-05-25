@@ -19,13 +19,13 @@ db.on("connected", () => console.log("mongo connected"));
 db.on("disconnected", () => console.log("mongo disconnected"));
 
 // Seed Data
-// const bookSeed = require("./models/bookSeed.js");
-// app.get("/book/seed", (req, res) => {
-//   Book.deleteMany({}, (error, allBooks) => {});
-//   Book.create(bookSeed, (error, data) => {
-//     res.redirect("/books");
-//   });
-// });
+const bookSeed = require("./models/bookSeed.js");
+app.get("/books/seed", (req, res) => {
+  Book.deleteMany({}, (error, allBooks) => {});
+  Book.create(bookSeed, (error, data) => {
+    res.redirect("/books");
+  });
+});
 // Create
 app.post("/books", (req, res) => {
   if (req.body.completed === "on") {
