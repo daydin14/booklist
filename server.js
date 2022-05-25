@@ -5,9 +5,11 @@ const PORT = process.env.PORT;
 const mongoose = require("mongoose");
 const Book = require("./models/book");
 const methodOverride = require("method-override");
+const booksController = require("./controllers/books");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
+app.use(booksController);
 
 mongoose.connect(process.env.DATABASE_URI, {
   useNewUrlParser: true,
